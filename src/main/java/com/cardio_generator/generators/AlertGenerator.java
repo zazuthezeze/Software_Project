@@ -10,6 +10,7 @@ public class AlertGenerator implements PatientDataGenerator {
     private boolean[] AlertStates; // false = resolved, true = pressed
 
     public AlertGenerator(int patientCount) {
+        // Changed indentation to 2 spaces
         AlertStates = new boolean[patientCount + 1];
     }
 
