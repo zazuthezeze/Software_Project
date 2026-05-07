@@ -6,12 +6,30 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Executors;
 
+/**
+ * This implements the OutputStrategy interface so that we can send patient data over a TCP connection
+ * It starts a TCP server on a given port and sends data to any connected client
+ */
 public class TcpOutputStrategy implements OutputStrategy {
 
+    /**
+     * The server socket listens for incoming client connections
+     */
     private ServerSocket serverSocket;
+    /**
+     * The socket which represents the connected client.
+     */
     private Socket clientSocket;
+    /**
+     * The writer that isused to send the data to the connected client
+     */
     private PrintWriter out;
 
+    /**
+     * This creates a new TcpOutputStrategy and starts a TCP server on the given port
+     * It then waits for a client connection in a separate thread
+     * @param port the port number to start the TCP server on
+     */
     public TcpOutputStrategy(int port) {
         try {
             serverSocket = new ServerSocket(port);
@@ -32,6 +50,14 @@ public class TcpOutputStrategy implements OutputStrategy {
         }
     }
 
+    /**
+     * This sends the generated patient data to the connected TCP client
+     * In case no client is connected then the data is skipped
+     * @param patientId the ID of the patient the data belongs to
+     * @param timestamp the time at which the data was generated
+     * @param label the type of data being output
+     * @param data the generated data value as a string
+     */
     @Override
     public void output(int patientId, long timestamp, String label, String data) {
         if (out != null) {
