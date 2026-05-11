@@ -1,0 +1,10 @@
+Overview of DataStorageSystem:
+
+The DataStorageSystem is a system that is responsible for storing all incoming patient data securely and making sure it can be retrieved when needed. 
+
+The whole chain starts with PatientData which is a single record of vitals at a specific point in time, it has a timestamp which means we can track when each measurement was taken and look back at historical data.
+The DataRetriever then collects the PatientData objects that it has access to and that came in from the signal generator, due to this: there is an aggregation relationship on the DataRetriever side with a multiplicity of 1 to 0 since one DataRetriever can collect many PatientData objects and both can exist independently of each other. 
+The DataRetriever then stores this data into DataStorage via the addPatientData() method, this is why DataRetriever has a permanent reference to DataStorage as an attribute and the connection between them is an association with a multiplicity of 1 to 1.
+
+Throughout this saving and retrieving of data the AccessController manages who can read or write data, this is important because not all staff should have access to all patient data since some records may be more sensitive than others. Due to this it has a multiplicity of 1 to 1 with DataStorage, DataRetriever and PatientData and association relationships with them since they will always need to check whether they are allowed to use certain information. We could have multiple AccessController types if we wanted different types of classes to have access to different things at different points in time but it is not needed here.
+In addition the DataDeletionPolicy handles when old data should be removed which is important because keeping data forever would waste storage and could also be a privacy issue. In light of this the DataDeletionPolicy has an association relationship with DataStorage as DataStorage will always need to check when it needs to get rid of data and a multiplicity of 1 to 1 has been chosen since in this case we only need one DataDeletionPolicy although we could have multiple for different types of data, some lasting longer than others
