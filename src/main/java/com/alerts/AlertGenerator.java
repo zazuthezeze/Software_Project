@@ -2,26 +2,42 @@ package com.alerts;
 
 import com.data_management.DataStorage;
 import com.data_management.Patient;
+import com.data_management.PatientRecord;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The {@code AlertGenerator} class is responsible for monitoring patient data
  * and generating alerts when certain predefined conditions are met. This class
  * relies on a {@link DataStorage} instance to access patient data and evaluate
  * it against specific health criteria.
+ *
+ * Each alert type is handled by a separate AlertStrategy implementation,
+ * following the Open/Closed principle — new alerts can be added by creating
+ * a new strategy without modifying this class.
  */
 public class AlertGenerator {
-        private DataStorage dataStorage;
+    private DataStorage dataStorage;
+    private List<AlertStrategy> strategies;
 
     /**
      * Constructs an {@code AlertGenerator} with a specified {@code DataStorage}.
      * The {@code DataStorage} is used to retrieve patient data that this class
      * will monitor and evaluate.
      *
-     * @param dataStorage the data storage system that provides access to patient
-     *                    data
+     * @param dataStorage the data storage system that provides access to patient data
      */
     public AlertGenerator(DataStorage dataStorage) {
-            this.dataStorage = dataStorage;
+        this.dataStorage = dataStorage;
+
+        // Register all alert strategies
+        strategies = new ArrayList<>();
+        strategies.add(new BloodPressureStrategy());
+        strategies.add(new BloodSaturationStrategy());
+        strategies.add(new HypotensiveHypoxemiaStrategy());
+        strategies.add(new ECGStrategy());
+        strategies.add(new TriggeredAlertStrategy());
     }
 
     /**
@@ -29,13 +45,17 @@ public class AlertGenerator {
      * are met. If a condition is met, an alert is triggered via the
      * {@link #triggerAlert}
      * method. This method should define the specific conditions under which an
-     * alert
-     * will be triggered.
+     * alert will be triggered.
      *
      * @param patient the patient data to evaluate for alert conditions
      */
     public void evaluateData(Patient patient) {
-        // Implementation goes here
+        List<PatientRecord> records = dataStorage.getRecords(
+                patient.getPatientId(), 0, System.currentTimeMillis());
+
+        for (AlertStrategy strategy : strategies) {
+            strategy.check(patient.getPatientId(), records);
+        }
     }
 
     /**
@@ -47,6 +67,8 @@ public class AlertGenerator {
      * @param alert the alert object containing details about the alert condition
      */
     private void triggerAlert(Alert alert) {
-        // Implementation might involve logging the alert or notifying staff
+        System.out.println("ALERT - Patient " + alert.getPatientId()
+                + " | " + alert.getCondition()
+                + " | " + alert.getTimestamp());
     }
 }
