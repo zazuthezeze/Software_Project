@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class BloodPressureStrategy implements AlertStrategy {
 
     @Override
-    public void check(int patientId, List<PatientRecord> records) {
+    public void checkAlert(int patientId, List<PatientRecord> records) {
         List<PatientRecord> systolic = filter(records, "SystolicPressure");
         List<PatientRecord> diastolic = filter(records, "DiastolicPressure");
 

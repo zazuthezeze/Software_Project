@@ -4,7 +4,7 @@ import com.data_management.PatientRecord;
 import java.util.List;
 
 /** Checks for manually triggered alerts from nurses or patients. */
-public class TriggeredAlertStrategy implements AlertStrategy {
+public class ManualAlertStrategy implements AlertStrategy {
 
     @Override
     public void checkAlert(int patientId, List<PatientRecord> records) {

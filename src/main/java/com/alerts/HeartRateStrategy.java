@@ -4,8 +4,8 @@ import com.data_management.PatientRecord;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/** Checks for abnormal ECG peaks using a sliding window average. */
-public class ECGStrategy implements AlertStrategy {
+/** Monitors for abnormal heart rates using a sliding window average. */
+public class HeartRateStrategy implements AlertStrategy {
 
     private static final int WINDOW_SIZE = 10;
 
@@ -22,7 +22,7 @@ public class ECGStrategy implements AlertStrategy {
             avg /= WINDOW_SIZE;
 
             if (ecg.get(i).getMeasurementValue() > avg * 1.5)
-                triggerAlert(new Alert(String.valueOf(patientId), "Abnormal ECG Peak", ecg.get(i).getTimestamp()));
+                triggerAlert(new Alert(String.valueOf(patientId), "Abnormal Heart Rate", ecg.get(i).getTimestamp()));
         }
     }
 

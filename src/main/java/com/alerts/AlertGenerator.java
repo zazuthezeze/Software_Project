@@ -54,7 +54,7 @@ public class AlertGenerator {
                 patient.getPatientId(), 0, System.currentTimeMillis());
 
         for (AlertStrategy strategy : strategies) {
-            strategy.check(patient.getPatientId(), records);
+            strategy.checkAlert(patient.getPatientId(), records);
         }
     }
 

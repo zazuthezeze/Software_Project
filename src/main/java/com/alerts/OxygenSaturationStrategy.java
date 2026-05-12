@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /** Checks for low saturation and rapid saturation drops. */
-public class BloodSaturationStrategy implements AlertStrategy {
+public class OxygenSaturationStrategy implements AlertStrategy {
 
     @Override
     public void checkAlert(int patientId, List<PatientRecord> records) {

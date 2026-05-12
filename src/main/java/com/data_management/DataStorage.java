@@ -19,9 +19,22 @@ public class DataStorage {
      * Constructs a new instance of DataStorage, initializing the underlying storage
      * structure.
      */
-    public DataStorage() {
-        this.patientMap = new HashMap<>();
+    private static DataStorage instance;
+
+public static DataStorage getInstance() {
+    if (instance == null) {
+        instance = new DataStorage();
     }
+    return instance;
+}
+
+/**
+ * Constructs a new instance of DataStorage, initializing the underlying storage
+ * structure.
+ */
+private DataStorage() {
+    this.patientMap = new HashMap<>();
+}
 
     /**
      * Adds or updates patient data in the storage.

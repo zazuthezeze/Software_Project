@@ -7,7 +7,7 @@ import java.util.List;
 public class HypotensiveHypoxemiaStrategy implements AlertStrategy {
 
     @Override
-    public void check(int patientId, List<PatientRecord> records) {
+    public void checkAlert(int patientId, List<PatientRecord> records) {
         boolean lowSystolic = records.stream()
                 .filter(r -> r.getRecordType().equals("SystolicPressure"))
                 .anyMatch(r -> r.getMeasurementValue() < 90);

@@ -10,5 +10,5 @@ import java.util.List;
  * New alert types can be added without modifying existing code.
  */
 public interface AlertStrategy {
-    void check(int patientId, List<PatientRecord> records);
+    void checkAlert(int patientId, List<PatientRecord> records);
 }
