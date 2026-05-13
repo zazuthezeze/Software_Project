@@ -26,9 +26,9 @@ class AlertGeneratorTest {
         generator = new AlertGenerator(storage);
     }
 
-    // -------------------------------------------------------------------------
+    
     // Blood Pressure - Critical Thresholds
-    // -------------------------------------------------------------------------
+    
 
     @Test
     void testSystolicAbove180_triggersAlert() {
@@ -99,9 +99,9 @@ class AlertGeneratorTest {
         assertDoesNotThrow(() -> generator.evaluateData(new Patient(1)));
     }
 
-    // -------------------------------------------------------------------------
+    
     // Blood Saturation
-    // -------------------------------------------------------------------------
+   
 
     @Test
     void testSaturationBelow92_triggersAlert() {
@@ -131,9 +131,9 @@ class AlertGeneratorTest {
         assertDoesNotThrow(() -> generator.evaluateData(new Patient(1)));
     }
 
-    // -------------------------------------------------------------------------
+    
     // Hypotensive Hypoxemia (low systolic AND low saturation)
-    // -------------------------------------------------------------------------
+   
 
     @Test
     void testHypotensiveHypoxemia_bothLow_triggersAlert() {
@@ -157,9 +157,9 @@ class AlertGeneratorTest {
         assertDoesNotThrow(() -> generator.evaluateData(new Patient(1)));
     }
 
-    // -------------------------------------------------------------------------
+    
     // ECG - Abnormal Peak Detection (sliding window average)
-    // -------------------------------------------------------------------------
+   
 
     /** A value 50% above the rolling average should trigger an ECG alert. */
     @Test

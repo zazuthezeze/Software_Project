@@ -19,7 +19,7 @@ public class AlertGenerator implements PatientDataGenerator {
      * Stores the current alert state for each patient
      * False means resolved while true means triggered
      */
-    private boolean[] AlertStates; // false = resolved, true = pressed
+    private boolean[] alertstates; // false = resolved, true = pressed
 
     /**
      * this creates a new AlertGenerator and initializes alert states for all patients
@@ -27,7 +27,7 @@ public class AlertGenerator implements PatientDataGenerator {
      */
     public AlertGenerator(int patientCount) {
         // Changed indentation to 2 spaces
-        AlertStates = new boolean[patientCount + 1];
+        alertstates = new boolean[patientCount + 1];
     }
     /**
      * this will generate and output an alert status for the given patient
@@ -40,9 +40,9 @@ public class AlertGenerator implements PatientDataGenerator {
     @Override
     public void generate(int patientId, OutputStrategy outputStrategy) {
         try {
-            if (AlertStates[patientId]) {
+            if (alertstates[patientId]) {
                 if (randomGenerator.nextDouble() < 0.9) { // 90% chance to resolve
-                    AlertStates[patientId] = false;
+                    alertstates[patientId] = false;
                     // Output the alert
                     outputStrategy.output(patientId, System.currentTimeMillis(), "Alert", "resolved");
                 }
@@ -52,7 +52,7 @@ public class AlertGenerator implements PatientDataGenerator {
                 boolean alertTriggered = randomGenerator.nextDouble() < p;
 
                 if (alertTriggered) {
-                    AlertStates[patientId] = true;
+                    alertstates[patientId] = true;
                     // Output the alert
                     outputStrategy.output(patientId, System.currentTimeMillis(), "Alert", "triggered");
                 }

@@ -12,9 +12,9 @@ import java.net.URISyntaxException;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit and integration tests for WebSocketClientImpl.
- * Since we can't connect to a real server in unit tests, we test
- * the message parsing logic directly by calling onMessage.
+ * Unit tests and integration tests for WebSocketClientImpl
+ * Since we can't connect to a real server in unit tests
+ * we test the message parsing logic directly by calling onMessage.
  */
 class WebSocketClientTest {
 
@@ -34,10 +34,9 @@ class WebSocketClientTest {
         }
     }
 
-    // -------------------------------------------------------------------------
+    
     // Normal message parsing
-    // -------------------------------------------------------------------------
-
+   
     @Test
     void testOnMessage_validMessage_storedCorrectly() {
         client.onMessage((String)"1,1000,ECG,0.5");
@@ -66,10 +65,8 @@ class WebSocketClientTest {
         assertFalse(storage.getRecords(4, 4000L, 4000L).isEmpty());
     }
 
-    // -------------------------------------------------------------------------
+    
     // Error handling - corrupted/malformed messages
-    // -------------------------------------------------------------------------
-
     @Test
     void testOnMessage_tooFewParts_skipped() {
         assertDoesNotThrow(() -> client.onMessage((String)"1,1000,ECG"));
@@ -100,9 +97,9 @@ class WebSocketClientTest {
         assertDoesNotThrow(() -> client.onMessage((String)"1,1000,ECG,notanumber"));
     }
 
-    // -------------------------------------------------------------------------
+
     // Connection events
-    // -------------------------------------------------------------------------
+    
 
     @Test
     void testOnClose_doesNotThrow() {
@@ -114,9 +111,9 @@ class WebSocketClientTest {
         assertDoesNotThrow(() -> client.onError(new Exception("Test error")));
     }
 
-    // -------------------------------------------------------------------------
+   
     // Constructor
-    // -------------------------------------------------------------------------
+    
 
     @Test
     void testConstructor_invalidUri_throwsException() {
@@ -128,10 +125,9 @@ class WebSocketClientTest {
         assertDoesNotThrow(() -> new WebSocketClientImpl("ws://localhost:9090"));
     }
 
-    // -------------------------------------------------------------------------
+    
     // Integration tests
-    // -------------------------------------------------------------------------
-
+    
     @Test
     void testIntegration_messageStoredAndAlertGenerated() {
         // Simulate receiving a critical blood pressure reading via WebSocket
